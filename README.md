@@ -20,16 +20,22 @@ Or install it yourself as:
 
 ## Usage
 
-Enable pretty output in development environment (`config/environments/development.rb`):
+Enable pretty output in development environment (`config/environments/development.rb`)
 
 ```ruby
 config.jbuilder.prettify = true
 ```
 
-Or set in in every request
+or set it in a controller based on the current request
 
 ```ruby
-Jbuilder.prettify = %w( 1 true yes ).includes?(params[:pretty_json])
+class ApplicationController < ActionController::Base
+  before_action :prettify_json
+
+  def prettify_json
+    Jbuilder.prettify = %w( 1 true yes ).includes?(params[:pretty_json])
+  end
+end
 ```
 
 ## Contributing
